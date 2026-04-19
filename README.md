@@ -6,11 +6,11 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 
 ## Uprades por em quanto
 
-- [X]  downloads de CSVs
-- [X]  criacao de playlists
-- [ ]  sincronizacao de playlists
-- [ ]  conexoes com outros apps
-
+✅️ downloads de CSVs
+✅️ criacao de playlists
+❌️ sincronizacao de playlists
+❌️ conexoes com outros apps
+✔️
 ## ---------- !!!ATENCAO!!! ----------
 
 estou fasendo a partir do esquema de CSV do site [https://sanishtech.com](https://sanishtech.com/tools/youtube-playlist-link-extractor), ja estou tentando melhorar isto, qualquer coisa e so voces alterarem a linha designada a coluna com os links do csv.
