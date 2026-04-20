@@ -1,4 +1,5 @@
 # pltube
+
 2.1.0(beta)
 The bast playlist downloader of the world
 
@@ -6,14 +7,7 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 
 ## Uprades por em quanto:
 
-<<<<<<< Updated upstream
-
-
-
 ✅️ downloads de CSVs
-=======
-=======
->>>>>>> Stashed changes
 
 ✅️ criacao de playlists
 
@@ -32,19 +26,16 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 ❌️ personalizacao de metadados ( Tumbnail, descricao, artista)
 
 ❌️ conexoes com apps diretamente (YoutubeMusic, Spotify, SoundCloud, Bandcamp)
-<<<<<<< Updated upstream
-
-✅️ criacao de playlists
-=======
->>>>>>> Stashed changes
 
 ❌️ sincronizacao de playlists
 
 ❌️ conexoes com outros apps
 
-## ----- !!!ATENCAO!!! -----
+# ----- !!!ATENCAO!!! -----
 
-estou fasendo a partir do esquema de CSV do site [https://sanishtech.com](https://sanishtech.com/tools/youtube-playlist-link-extractor) que usa os links na coluna 2 para alterar use **-r ou --row**
+estou fasendo a partir do esquema de CSV do site [https://sanishtech.com](https://sanishtech.com/tools/youtube-playlist-link-extractor) que usa os links na coluna 2 para alterar use **-r ou --row
+
+**
 
 **Este e um projeto pessoal, estou fasendo como um hobby**
 
