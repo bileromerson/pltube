@@ -7,7 +7,6 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 ## Uprades por em quanto
 
 ✅️ downloads de CSVs
-<<<<<<< HEAD
 =======
 
 ✅️ criacao de playlists
@@ -25,7 +24,6 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 ❌️ personalizacao de metadados ( Tumbnail, descricao, artista)
 
 ❌️ conexoes com apps diretamente (YoutubeMusic, Spotify, SoundCloud, Bandcamp)
->>>>>>> 2.1.0(beta)
 
 ✅️ criacao de playlists
 
@@ -45,3 +43,5 @@ se quiser me apoiar falando mais mrlhorias e bugs encontrados ficarei feliz.
 * spotipy
 * yt-dlp
 * python3
+
+>>>>>>> 2.1.0(beta)
