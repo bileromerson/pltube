@@ -14,6 +14,8 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 
 ✅️ interfase com parametros alteraveis facilmente
 
+❌️ acrecimo de cookies de navegacao para melhor esperiencia
+
 ❌️ outras formas de playlist (M3U8, WPL, XSPF)
 
 ❌️ outras fomas de audio + formas de baixar videos (MP4, WAV, AVI)
