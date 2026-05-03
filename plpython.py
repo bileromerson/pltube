@@ -28,8 +28,7 @@ def verificar_argumentos(main):
     if main.row != None:
         ROW = int(main.row)
 
-    print(main)
-    print({BASE_DIR, SONGS_DIR, PLAYLISTS_DIR, LOG_FILE,ROW})
+    # print({BASE_DIR, SONGS_DIR, PLAYLISTS_DIR, LOG_FILE,ROW})
 
 def registrar_erro(url, motivo, playlist):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
@@ -140,7 +139,7 @@ def criar_playlist(playlist_name, playlist_entries):
             f.write(f"#EXTINF:{duration},{artist} - {title}\n")
             f.write(f"{path}\n")
 
-def processar_csv(csv_file, PlName):
+def processar_csv(csv_file, Id):
     playlist_entries = []
     # Lê o CSV da pasta atual
     csv_path = os.path.join(BASE_DIR, csv_file)
@@ -156,9 +155,13 @@ def processar_csv(csv_file, PlName):
         for line in reader:
             if len(line) < 3: continue
             url = line[ROW]
+<<<<<<< HEAD
             if PlName != None or PlName != False:
                 playlist_name = line[PlName]
             print(url)
+=======
+            
+>>>>>>> 1d8a0f8 (inicio da implementação dos argumentos para vercao 2.2.0)
             if url.startswith('http'):
                 print(f"Verificando: {url}")
                 if verificar_downloads(url):
@@ -213,9 +216,17 @@ if __name__ == "__main__":
         print(f"Nenhum arquivo .csv encontrado em: {BASE_DIR}")
     for csv_file in csvs:
         print(f"Processando arquivo: {csv_file}")
+<<<<<<< HEAD
         processar_csv(csv_file, int(mainVar.PlName))
+=======
+        processar_csv(csv_file, mainVar.Id)
+
+>>>>>>> 1d8a0f8 (inicio da implementação dos argumentos para vercao 2.2.0)
 
 
 
 # python3 plpython.py --PlName 3 -Id --row 5 -Pp
+<<<<<<< HEAD
 baixar_musica
+=======
+>>>>>>> 1d8a0f8 (inicio da implementação dos argumentos para vercao 2.2.0)

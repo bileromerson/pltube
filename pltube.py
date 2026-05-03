@@ -10,6 +10,7 @@ import argparse
 BASE_DIR = os.getcwd()
 SONGS_DIR = os.path.join(BASE_DIR, 'songs')
 PLAYLISTS_DIR = os.path.join(BASE_DIR, 'playlists')
+LOG_FILE = os.path.join(BASE_DIR, 'links_falhos.txt')
 LOG_FILE = os.path.join(BASE_DIR, 'Logs.txt')
 ROW = 2 # coluna da URL
 
@@ -26,7 +27,7 @@ def verificar_diretorios(main):
     if main.LogFile != None:
         LOG_FILE = os.path.normpath(os.path.join(BASE_DIR,main.LogFile))
     if main.row != None:
-        ROW = main.row
+        ROW = int(main.row)
 
     print(main)
     print({BASE_DIR, SONGS_DIR, PLAYLISTS_DIR, LOG_FILE,ROW})
@@ -112,8 +113,16 @@ def baixar_musica(url, artist, title):
         return filepath_mp3
     except Exception:
         return None
+    
+def criar_playlist(playlist_name, playlist_entries):
+    m3u_path = os.path.join(PLAYLISTS_DIR, f'{playlist_name}.m3u')
+    with open(m3u_path, 'w', encoding='utf-8') as f:
+        f.write("#EXTM3U\n")
+        for title, artist, duration, path in playlist_entries:
+            f.write(f"#EXTINF:{duration},{artist} - {title}\n")
+            f.write(f"{path}\n")
 
-def processar_csv(csv_file):
+def processar_csv(csv_file, Id):
     playlist_entries = []
     # Lê o CSV da pasta atual
     csv_path = os.path.join(BASE_DIR, csv_file)
@@ -126,9 +135,12 @@ def processar_csv(csv_file):
         except StopIteration:
             return
 
-        for row in reader:
-            if len(row) < 3: continue
-            url = row[ROW].strip()
+        for line in reader:
+            if len(line) < 3: continue
+            url = line[ROW]
+            if Id:
+                url = f"https://www.youtube.com/watch?v={url}"
+            print(url)
             
             if url.startswith('http'):
                 print(f"Verificando: {url}")
@@ -143,15 +155,12 @@ def processar_csv(csv_file):
                 # Gera caminho relativo para a playlist funcionar na pasta atual
                 rel_path = os.path.relpath(music_path, start=PLAYLISTS_DIR)
                 playlist_entries.append((meta['title'], meta['artist'], meta['duration'], rel_path))
+                
 
-    m3u_path = os.path.join(PLAYLISTS_DIR, f'{playlist_name}.m3u')
-    with open(m3u_path, 'w', encoding='utf-8') as f:
-        f.write("#EXTM3U\n")
-        for title, artist, duration, path in playlist_entries:
-            f.write(f"#EXTINF:{duration},{artist} - {title}\n")
-            f.write(f"{path}\n")
+    criar_playlist(playlist_name, playlist_entries)
+    
 
-def atualizar(csv_file):
+def atualizar(csv_file, PlName):
     playlist_entries = []
     # Lê o CSV da pasta atual
     csv_path = os.path.join(BASE_DIR, csv_file)
@@ -164,14 +173,18 @@ def atualizar(csv_file):
         except StopIteration:
             return
 
-        for row in reader:
-            if len(row) < 3: continue
-            url = row[ROW].strip()
+        for line in reader:
+            if len(line) < 3: continue
+            url = line[ROW]
+            if PlName != None or PlName != False:
+                playlist_name = line[PlName]
+
+            url = f'https://www.youtube.com/watch?v={url}'# ----------------------------------------
+            
             
             if url.startswith('http'):
                 print(f"Verificando: {url}")
                 meta = extrair_metadados(url)
-
                 if meta is None or meta['artist'] is None: continue
                 
                 music_path = baixar_musica(url, meta['artist'], meta['title'])
@@ -189,23 +202,30 @@ def atualizar(csv_file):
             f.write(f"{path}\n")
 
 def main():
-
-
+    
     parser = argparse.ArgumentParser(description="How to use Pltube")
 
     parser.add_argument("-b", "--BaseDir", help="Diretorio base( Diretorio dos CSVs ); padrao e o seu doretorio atual")
     parser.add_argument("-s", "--SongsDir", help="Diretorio para musicas; padrao e /songs")
     parser.add_argument("-p", "--PlaylistDir", help="Diretorio para playlist; padrao e /playlists")
-    parser.add_argument("-l", "--LogFile", help="arquivo de log de error; padrao e /Logs.txt")
+    parser.add_argument("-l", "--LogFile", help="Arquivo de log de error; padrao e /Logs.txt")
+    parser.add_argument("-Pl", "--Plataform", help="Plataforma que vai ser feito o download")
+    parser.add_argument("-Pp", "--PeriodicPauses", help="Fala para o programa ser cauteloso e faser pausas a cada certa quantidade de musicas, voce tera que aperta enter para sair da pausa; padrao 100")
+
 
     parser.add_argument("--lista", help="Caminho para o arquivo de lista")
     parser.add_argument("--row", help="Pega a coluna responsavelpela url; padrao 2, use - para comessar de tras para frente")
+    parser.add_argument("--PlName", help="Indica que o CSV contém o nome da playlist em uma coluna expecifica, criando a playlist a partir do que esta no csv e nao no nome do csv; Ex. --PlName 2")
 
     parser.add_argument("-a", "--append", action="store_true", help="Ativar modo de atualizacao de dos arquivos")
+    parser.add_argument("-Id", action="store_true", help="Indica que o CSV contém apenas os IDs dos vídeos/músicas")
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 2.1')
+
     
     return parser.parse_args()
 
 if __name__ == "__main__":
+    
     mainVar = main()
     verificar_diretorios(mainVar)
 
@@ -215,5 +235,7 @@ if __name__ == "__main__":
         print(f"Nenhum arquivo .csv encontrado em: {BASE_DIR}")
     for csv_file in csvs:
         print(f"Processando arquivo: {csv_file}")
-        atualizar(csv_file)
-        
+        processar_csv(csv_file, mainVar.Id)
+
+
+# python3 plpython.py --PlName 3 -Id --row 5 -Pp
