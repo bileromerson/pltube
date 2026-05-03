@@ -1,0 +1,9 @@
+{
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "*/*",
+    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Content-Type": "application/json",
+    "X-Goog-AuthUser": "0",
+    "x-origin": "https://music.youtube.com",
+    "Cookie": "__Secure-3PSID=g.a0009AjxIC80vTowlkOfAH-kLWcROwzOr87H2-7hokVn-CFqP_iylEv0A28f0BxLWoFr92UUtAACgYKAR0SARQSFQHGX2MiA1MuhymFWjcTtUx3ZaQlOxoVAUF8yKqlyxsukMe8KhmssF6W5mf70076; __Secure-3PAPISID=WsGRL2C53t17zrhx/AbANVc2JtHfiQZZpz; LOGIN_INFO=AFmmF2swRAIgEHfnC4OuqXwMmFPmPpX0pPDhj_wDQ0KfT_Ez83KM8qUCIEBE7AH4_j_H_lB-TVkUTBrjfVcErmzaTe6yBdJxhnM_:QUQ3MjNmejNDZmJvNHhSRG9RTHFxOUVpcFVIdkl2UmVYZHRZRGdtNVhoYld3UlBDWWVRTzNMVXBkTnI2YmU2T2JoZzB1cVppU1o0M0dEeDZzWllKU21uUVI3dE85UUJJQmVLUXhGQllHZzMyQ1g5LXI1T0ZKWWJEOFFTeTM0YjR5WGlCTmtvWHVSSXpTUjluN2NFTF9EVHdIMXJ4akl5WDdR; SAPISID=WsGRL2C53t17zrhx/AbANVc2JtHfiQZZpz; __Secure-3PSIDTS=sidts-CjQBWhotCQL3dDbUofM4QLqnWfiue0NtxJhx19wEGPd6Hld_k8LNM_UUFMI1JrBLZDpyQ2FqEAA"
+}

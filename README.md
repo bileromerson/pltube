@@ -1,6 +1,13 @@
 # pltube
 
+<<<<<<< Updated upstream
+=======
+![Licença MIT](https://img.shields.io/badge/Licença-MIT-blue)![Status stable](https://img.shields.io/badge/Status-Stable-yellow)
+
+>>>>>>> Stashed changes
 The bast playlist downloader of the world
+
+2.1.0(beta)
 
 o **pltube** foi criado com o objetivo de faser um backup offline de todas suas musicas junto com as playlists para voce nunca perder suas musicas favoritas e conseguir ouvir de qualquer lugar, no momento nos temos apenas a opcao pelo youtube mas estou pensando em faser versoes com acesso ao spotfy e outros.
 
@@ -26,6 +33,13 @@ o **pltube** foi criado com o objetivo de faser um backup offline de todas suas 
 
 ## ---------- !!!ATENCAO!!! ----------
 
+<<<<<<< Updated upstream
+=======
+❌️ conexoes com outros apps
+
+# ----- !!!ATENCAO!!! -----
+
+>>>>>>> Stashed changes
 estou fasendo a partir do esquema de CSV do site [https://sanishtech.com](https://sanishtech.com/tools/youtube-playlist-link-extractor) que usa os links na coluna 2 para alterar use **-r ou --row**
 
 **Este e um projeto pessoal, estou fasendo como um hobby**
