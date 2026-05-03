@@ -10,15 +10,11 @@ import argparse
 BASE_DIR = os.getcwd()
 SONGS_DIR = os.path.join(BASE_DIR, 'songs')
 PLAYLISTS_DIR = os.path.join(BASE_DIR, 'playlists')
-<<<<<<< Updated upstream:pltube.py
-=======
 LOG_FILE = os.path.join(BASE_DIR, 'links_falhos.txt')
->>>>>>> Stashed changes:plpython.py
 LOG_FILE = os.path.join(BASE_DIR, 'Logs.txt')
 ROW = 2 # coluna da URL
 
-def verificar_diretorios(main):
-
+def verificar_argumentos(main):
     global BASE_DIR, SONGS_DIR, PLAYLISTS_DIR, LOG_FILE,ROW
 
     if main.BaseDir != None:
@@ -79,16 +75,35 @@ def extrair_metadados(url):
     except Exception:
         return None
 
-def baixar_musica(url, artist, title):
+def verificar_downloads(url):
+    
+    urlId = url.split('=')[-1]
+
+    print(f"Verificando histórico para: {urlId}")
+    with open('Historico.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            if urlId in line:
+                return None, None, None, None
+    
+    meta = extrair_metadados(url)
+    artist = meta['artist'] if meta and meta['artist'] else 'Desconecido'
+    title = meta['title'] if meta and meta['title'] else 'Desconecido'
+
     safe_title = ''.join(c for c in title if c.isalnum() or c in ' -_').rstrip()
     folder_path = os.path.join(SONGS_DIR, artist)
     filepath_mp3 = os.path.join(folder_path, f"{safe_title}.mp3")
-    
-    # --- VERIFICAÇÃO DE DUPLICADOS ---
+
     if os.path.exists(filepath_mp3):
         print(f"Pular: {safe_title} já existe em {artist}")
-        return filepath_mp3
+        return None,None,None,None
+    
+    return meta, safe_title, folder_path, filepath_mp3
 
+def baixar_musica(url):
+    meta, safe_title, folder_path, filepath_mp3 = verificar_downloads(url)
+    if not meta:
+        return None
+    
     os.makedirs(folder_path, exist_ok=True)
     filepath_base = os.path.join(folder_path, safe_title)
 
@@ -98,7 +113,7 @@ def baixar_musica(url, artist, title):
         'writethumbnail': True,
         'addmetadata': True,
         'outtmpl': filepath_base,
-        'download_archive': 'Histrico.txt',
+        'download_archive': 'Historico.txt',
         'noplaylist': True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -138,26 +153,23 @@ def processar_csv(csv_file, PlName):
         except StopIteration:
             return
 
-<<<<<<< Updated upstream:pltube.py
-        for row in reader:
-            if len(row) < 3: continue
-            url = row[ROW].strip()
-            
-=======
         for line in reader:
             if len(line) < 3: continue
             url = line[ROW]
             if PlName != None or PlName != False:
                 playlist_name = line[PlName]
             print(url)
->>>>>>> Stashed changes:plpython.py
             if url.startswith('http'):
                 print(f"Verificando: {url}")
+                if verificar_downloads(url):
+
+                    print(f"Pular: {url} já foi baixado anteriormente")
+                    continue
                 meta = extrair_metadados(url)
 
                 if meta is None or meta['artist'] is None: continue
                 
-                music_path = baixar_musica(url, meta['artist'], meta['title'])
+                music_path = baixar_musica(url)
                 print(music_path)
                 if music_path is None: continue
                 
@@ -167,54 +179,9 @@ def processar_csv(csv_file, PlName):
                 
 
     criar_playlist(playlist_name, playlist_entries)
-    
 
-<<<<<<< Updated upstream:pltube.py
-def atualizar(csv_file):
-=======
-def atualizar(csv_file, PlName):
->>>>>>> Stashed changes:plpython.py
-    playlist_entries = []
-    # Lê o CSV da pasta atual
-    csv_path = os.path.join(BASE_DIR, csv_file)
-    playlist_name = os.path.splitext(csv_file)[0]
-
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        try:
-            next(reader) # Pula o cabeçalho
-        except StopIteration:
-            return
-
-        for line in reader:
-            if len(line) < 3: continue
-            url = line[ROW]
-            if PlName != None or PlName != False:
-                playlist_name = line[PlName]
-
-            url = f'https://www.youtube.com/watch?v={url}'# ----------------------------------------
-
-            if url.startswith('http'):
-                print(f"Verificando: {url}")
-                meta = extrair_metadados(url)
-                if meta is None or meta['artist'] is None: continue
-                
-                music_path = baixar_musica(url, meta['artist'], meta['title'])
-                print(music_path)
-                if music_path is None: continue
-                
-                # Gera caminho relativo para a playlist funcionar na pasta atual
-                rel_path = os.path.relpath(music_path, start=PLAYLISTS_DIR)
-                playlist_entries.append((meta['title'], meta['artist'], meta['duration'], rel_path))
-
-    m3u_path = os.path.join(PLAYLISTS_DIR, f'{playlist_name}.m3u')
-    with open(m3u_path, 'a', encoding='utf-8') as f:
-        for title, artist, duration, path in playlist_entries:
-            f.write(f"#EXTINF:{duration},{artist} - {title}\n")
-            f.write(f"{path}\n")
 
 def main():
-
 
     parser = argparse.ArgumentParser(description="How to use Pltube")
 
@@ -238,22 +205,17 @@ def main():
     return parser.parse_args()
 
 if __name__ == "__main__":
-    
     mainVar = main()
-    verificar_diretorios(mainVar)
-
+    verificar_argumentos(mainVar)
     criar_diretorios()
     csvs = obter_csvs()
     if not csvs:
         print(f"Nenhum arquivo .csv encontrado em: {BASE_DIR}")
     for csv_file in csvs:
         print(f"Processando arquivo: {csv_file}")
-<<<<<<< Updated upstream:pltube.py
-        atualizar(csv_file)
-        
-=======
         processar_csv(csv_file, int(mainVar.PlName))
 
 
+
 # python3 plpython.py --PlName 3 -Id --row 5 -Pp
->>>>>>> Stashed changes:plpython.py
+baixar_musica

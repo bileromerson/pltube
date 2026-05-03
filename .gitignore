@@ -1,0 +1,27 @@
+
+# arquivos
+
+*.mp4
+*.mp3
+*.log
+*.csv
+*.m3u
+.cache
+lembrar.md
+headers.json
+
+# diretorios
+__pycache__/
+playlists/
+.vscode/
+.venv/
+songs/
+demos/
+test/
+venv/
+
+
+
+
+
+#outros
